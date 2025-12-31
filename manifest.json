@@ -7,6 +7,7 @@
         "activeTab",
         "tabs",
         "debugger",
+        "storage",
         "downloads"
     ],
     "background": {

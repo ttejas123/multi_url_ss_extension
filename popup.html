@@ -1,16 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <title>Sequence Runner</title>
   <style>
-    body { font-family: sans-serif; width: 300px; }
-    textarea { width: 100%; height: 150px; }
-    button { width: 100%; margin-top: 8px; }
+    :root {
+      --bg: #0f172a;
+      --card: #020617;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --success: #22c55e;
+      --error: #ef4444;
+      --border: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 360px;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: 16px;
+      margin: 0 0 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 110px;
+      resize: none;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      outline: none;
+    }
+
+    textarea::placeholder {
+      color: var(--muted);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent);
+      color: #020617;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .card {
+      margin-top: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .progress {
+      width: 100%;
+      height: 8px;
+      border-radius: 10px;
+      background: #020617;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
+      transition: width 0.4s ease;
+    }
+
+    .stats {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      flex: 1;
+      padding: 6px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .pill.success {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--success);
+    }
+
+    .pill.error {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--error);
+    }
+
+    .pill.info {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+    }
   </style>
 </head>
+
 <body>
-  <h3>Sequential Screenshot</h3>
-  <textarea id="urls" placeholder="One URL per line"></textarea>
-  <button id="submit">Start</button>
+  <h1>Sequential Screenshot Runner</h1>
+
+  <textarea
+    id="urls"
+    placeholder="Paste URLs (one per line)&#10;Example:&#10;https://vans.com&#10;https://google.com">
+  </textarea>
+
+  <button id="submit">Start Processing</button>
+
+  <div class="card">
+    <div class="label">Current URL</div>
+    <div class="value" id="current">—</div>
+
+    <div class="progress">
+      <div class="progress-bar" id="bar"></div>
+    </div>
+
+    <div class="stats">
+      <div class="pill info" id="count">0 / 0</div>
+      <div class="pill success" id="passed">Passed: 0</div>
+      <div class="pill error" id="failed">Failed: 0</div>
+    </div>
+  </div>
 
   <script src="popup.js"></script>
 </body>
